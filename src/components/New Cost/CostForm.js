@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./CostForm.css";
 
-const CostForm = () => {
+const CostForm = (props) => {
   const [inputName, setInputName] = useState("");
   const [inputAmount, setInputAmount] = useState("");
   const [inputDate, setInputDate] = useState("");
@@ -50,14 +50,17 @@ const CostForm = () => {
       amount: inputAmount,
       date: new Date(inputDate),
     };
-    console.log(costData);
+    props.onSaveCostData(costData);
+    setInputName("");
+    setInputAmount("");
+    setInputDate("");
   };
   return (
     <form onSubmit={submitHandler}>
       <div className="mew-cost__controls">
         <div className="new-cost__control">
           <label>Название</label>
-          <input type="text" onChange={nameChangeHandler} />
+          <input type="text" value={inputName} onChange={nameChangeHandler} />
         </div>
         <div className="new-cost__control">
           <label>Сумма</label>
@@ -65,6 +68,7 @@ const CostForm = () => {
             type="number"
             min="0.01"
             step="0.01"
+            value={inputAmount}
             onChange={amountChangeHandler}
           />
         </div>
@@ -74,6 +78,7 @@ const CostForm = () => {
             type="date"
             min="2022-08-31"
             step="2023-12-31"
+            value={inputDate}
             onChange={dateChangeHandler}
           />
         </div>
